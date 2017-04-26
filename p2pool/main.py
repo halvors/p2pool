@@ -378,7 +378,7 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
                     datums, dt = wb.local_rate_monitor.get_datums_in_last()
                     my_att_s = sum(datum['work']/dt for datum in datums)
                     my_shares_per_s = sum(datum['work']/dt/bitcoin_data.target_to_average_attempts(datum['share_target']) for datum in datums)
-                    this_str += '\n Local: %sH/s in last %s Local dead on arrival: %s Expected time to share: %s' % (
+                    this_str += '\nLocal: %sH/s in last %s Local dead on arrival: %s Expected time to share: %s' % (
                         math.format(int(my_att_s)),
                         math.format_dt(dt),
                         math.format_binomial_conf(sum(1 for datum in datums if datum['dead']), len(datums), 0.95),
@@ -397,13 +397,13 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
                             paytot += curtot*1e-8
                             paystr += "(%.4f)" % (curtot*1e-8,)
                         paystr += "=%.4f" % (paytot,)
-                        this_str += '\n Shares: %i (%i orphan, %i dead) Stale rate: %s Efficiency: %s Current payout: %s %s' % (
+                        this_str += '\nShares: %i (%i orphan, %i dead) Stale rate: %s Efficiency: %s Current payout: %s %s' % (
                             shares, stale_orphan_shares, stale_doa_shares,
                             math.format_binomial_conf(stale_orphan_shares + stale_doa_shares, shares, 0.95),
                             math.format_binomial_conf(stale_orphan_shares + stale_doa_shares, shares, 0.95, lambda x: (1 - x)/(1 - stale_prop)),
                             paystr, net.PARENT.SYMBOL,
                         )
-                        this_str += '\n Pool: %sH/s Stale rate: %.1f%% Expected time to block: %s' % (
+                        this_str += '\nPool: %sH/s Stale rate: %.1f%% Expected time to block: %s' % (
                             math.format(int(real_att_s)),
                             100*stale_prop,
                             math.format_dt(2**256 / node.bitcoind_work.value['bits'].target / real_att_s),
